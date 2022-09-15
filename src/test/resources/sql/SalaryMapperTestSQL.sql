@@ -1,0 +1,1 @@
+INSERT INTO `tb_salary` (`id`, `nurse_id`, `salary`) VALUES (1001, 100000000, 1000.00)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjy.beadhouse.dao.UserMapper">
+    <insert id="userRegister">
+        insert into tb_user (name, password, mobile, email, `rank`)
+        values ( #{name}, #{password}, #{mobile}
+               , #{email}, 2)
+    </insert>
+
+    <update id="modifyUser">
+        update tb_user set `name` = #{name},`password` = #{password},`mobile` = #{mobile},`email` = #{email}
+        where `id` = #{id}
+    </update>
+
+
+    <select id="getUserByName" resultType="com.yjy.beadhouse.entity.User">
+        select id, name, password, mobile, email, `rank`
+        from tb_user
+        where name = #{name}
+    </select>
+
+    <select id="getAllUsers" resultType="com.yjy.beadhouse.vo.UserVO">
+        SELECT
+            tu.`id`,
+            tu.`name`,
+            tu.`password`,
+            tu.mobile,
+            tu.email,
+            tr.`name` `rank`
+        FROM
+            tb_user tu
+                LEFT JOIN `tb_rank` tr ON tu.`rank` = tr.`rank_id`
+    </select>
+
+    <select id="getUserVoById" resultType="com.yjy.beadhouse.vo.UserVO">
+        SELECT
+            tu.`id`,
+            tu.`name`,
+            tu.`password`,
+            tu.mobile,
+            tu.email,
+            tr.`name` `rank`
+        FROM
+            tb_user tu
+                LEFT JOIN `tb_rank` tr ON tu.`rank` = tr.`rank_id`
+        where tu.`id` = #{id}
+    </select>
+
+    <select id="getAllUserId" resultType="java.lang.Integer">
+        select id from tb_user where `rank` = 2
+    </select>
+
+
+</mapper>

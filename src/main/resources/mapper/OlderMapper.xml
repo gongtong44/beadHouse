@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjy.beadhouse.dao.OlderMapper">
+
+    <resultMap id="olderMap" type="com.yjy.beadhouse.entity.Older">
+        <id column="id" property="id"/>
+        <result column="age" property="age"/>
+        <result column="name" property="name"/>
+        <result column="bed_id" property="bedId"/>
+        <result column="user_id" property="userId"/>
+        <result column="nurse_id" property="nurseId"/>
+    </resultMap>
+
+    <resultMap id="oldVoMap" type="com.yjy.beadhouse.vo.OldVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="bed_name" property="bedName"/>
+        <result column="nurse_name" property="nurseName"/>
+        <result column="age" property="age"/>
+        <result column="user_name" property="userName"/>
+        <result column="bed_id" property="bedId"/>
+    </resultMap>
+
+    <insert id="addOlder">
+        insert  into tb_old (`name`,`age`,`bed_id`,`user_id`,`nurse_id`) values (#{name},#{age},#{bedId}
+                                                                        ,#{userId},#{nurseId})
+    </insert>
+
+    <update id="modifyOld">
+        update tb_old set `name` = #{name},`age` = #{age},`nurse_id` = #{nurseId}, `bed_id` = #{bedId}
+        where id = #{id}
+    </update>
+
+    <select id="getUserOlder" resultMap="olderMap">
+        select *
+        from tb_old
+        where  user_id = #{id}
+    </select>
+
+    <select id="getNurseOlderList" resultMap="olderMap">
+        select *
+        from tb_old
+        where  nurse_id = #{id}
+    </select>
+
+    <select id="getOlderById" resultMap="olderMap">
+        select *
+        from tb_old
+        where id = #{id}
+    </select>
+
+    <select id="getAllOlds" resultMap="oldVoMap">
+        SELECT
+            `to`.`id`,
+            `to`.`name`,
+            `to`.`age`,
+            tb.`name` `bed_name`,
+            tu1.`name` `user_name`,
+            tu2.`name` `nurse_name`
+        FROM tb_old `to`
+            LEFT JOIN `tb_bed` tb ON tb.`id` = `to`.`bed_id`
+            LEFT JOIN `tb_user` tu1 ON tu1.`id` = `to`.`user_id`
+            LEFT JOIN `tb_user` tu2 ON tu2.`id` = `to`.`nurse_id`
+    </select>
+
+    <select id="getOldVoById" resultMap="oldVoMap">
+        SELECT
+            `to`.`id`,
+            `to`.`name`,
+            `to`.`age`,
+            tb.`name` `bed_name`,
+            tu1.`name` `user_name`,
+            tu2.`name` `nurse_name`,
+            tb.`id` `bed_id`
+        FROM tb_old `to`
+                 LEFT JOIN `tb_bed` tb ON tb.`id` = `to`.`bed_id`
+                 LEFT JOIN `tb_user` tu1 ON tu1.`id` = `to`.`user_id`
+                 LEFT JOIN `tb_user` tu2 ON tu2.`id` = `to`.`nurse_id`
+        where `to`.id = #{id}
+    </select>
+
+</mapper>

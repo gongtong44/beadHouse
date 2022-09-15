@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjy.beadhouse.dao.NurseMapper">
+
+    <insert id="addNurse">
+        insert  into tb_user (`name`,`password`,`mobile`,`email`,`rank`)
+        values (#{name},#{password},#{mobile},#{email},1)
+    </insert>
+
+    <update id="modifyNurse">
+        update tb_user
+        set `name` = #{name},`password` = #{password},`mobile` = #{mobile}, `email` = #{email}
+        where id = #{id}
+    </update>
+
+    <delete id="delNurse">
+        delete from tb_user where id = #{id}
+    </delete>
+
+
+    <select id="getNurseList" resultType="com.yjy.beadhouse.entity.User">
+        select * from tb_user
+        where `rank` = 1
+    </select>
+
+    <select id="getNurseById" resultType="com.yjy.beadhouse.entity.User">
+        select `id`,`name`,`password`,`mobile`,`email`
+        from tb_user
+        where id = #{id}
+    </select>
+
+
+</mapper>

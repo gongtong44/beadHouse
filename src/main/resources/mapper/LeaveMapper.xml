@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjy.beadhouse.dao.LeaveMapper">
+
+    <resultMap id="leaveMap" type="com.yjy.beadhouse.entity.Leave">
+        <id column="id" property="id"/>
+        <result property="nurseId" column="nurse_id"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="reason" column="reason"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <resultMap id="leaveVoMap" type="com.yjy.beadhouse.vo.LeaveVO">
+        <id column="id" property="id"/>
+        <result property="nurseName" column="nurse_name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="reason" column="reason"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <insert id="addLeave">
+        insert  into tb_leave (`nurse_id`,`start_date`,`end_date`,`reason`,`status`)
+        values (#{nurseId},#{startDate},#{endDate},#{reason},'待审核');
+    </insert>
+
+    <update id="agreeLeave">
+        update tb_leave set `status` = '已同意' where id = #{id}
+    </update>
+
+    <update id="refuseLeave">
+        update tb_leave set `status` = '已驳回' where id = #{id}
+    </update>
+
+    <select id="getNurseLeaveList" resultType="com.yjy.beadhouse.entity.Leave">
+        select * from tb_leave where nurse_id = #{id}
+    </select>
+
+    <select id="getAllLeave" resultMap="leaveVoMap">
+        SELECT
+            tl.id,
+            tl.end_date,
+            tl.start_date,
+            tl.reason,
+            tl.`status`,
+            tu.`name`  `nurse_name`
+        FROM
+            tb_leave tl
+                LEFT JOIN tb_user tu ON tl.nurse_id = tu.id
+    </select>
+
+
+</mapper>

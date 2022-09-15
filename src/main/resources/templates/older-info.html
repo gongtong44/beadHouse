@@ -1,0 +1,237 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>老人信息</title>
+
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="/assets/js/html5shiv.js"></script>
+  <script src="/assets/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="index"><img src="/assets/images/logo.png" alt=""></a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a href="index"><img src="/assets/images/logo_icon.png" alt=""></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+
+        <div class="left-side-inner">
+
+            <!-- visible to small devices only -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media logged-user">
+                    <img alt="" src="/assets/images/photos/user-avatar.png" class="media-object">
+                    <div class="media-body">
+                        <h4><a href="#">John Doe</a></h4>
+                        <span>"Hello There..."</span>
+                    </div>
+                </div>
+
+                <h5 class="left-nav-title">Account Information</h5>
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                    <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                </ul>
+            </div>
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li><a href="oldInfo"><i class="fa fa-home"></i> <span>老人信息</span></a></li>
+                <li><a href="userPay"><i class="fa fa-home"></i> <span>缴费系统</span></a></li>
+                <li><a href="userMail"><i class="fa fa-home"></i> <span>建议系统</span></a></li>
+                <li><a href="main"><i class="fa fa-home"></i> <span>返回首页</span></a></li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+                    <li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <img src="/assets/images/photos/user-avatar.png" alt="" />
+                            <span th:text="${session.USER_SESSION.getName()}">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <!--notification menu end -->
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <!--<div class="page-heading">-->
+            <!--Page Tittle goes here-->
+        <!--</div>-->
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="profile-pic text-center">
+                                        <img alt="" src="/assets/images/photos/user1.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <ul class="p-info">
+                                        <li>
+                                            <div class="title">姓名</div>
+                                            <div class="desk"><p th:text="${olderInfo.name}"></p></div>
+                                        </li>
+                                        <li>
+                                            <div class="title">年龄</div>
+                                            <div class="desk"><p th:text="${olderInfo.age}"/> </div>
+                                        </li>
+                                        <li>
+                                            <div class="title">床位号</div>
+                                            <div class="desk"><p th:text="${olderInfo.bedId+'号'}"/></div>
+                                        </li>
+                                        <li>
+                                            <div class="title">护工编号</div>
+                                            <div class="desk"><p th:text="${olderInfo.nurseId+'号'}"/></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                日常记录
+                                <h3 th:text="${msg}"></h3>
+                            </header>
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>时间</th>
+                                        <th>记录信息</th>
+                                        <th>老人姓名</th>
+                                        <th>护工姓名</th>
+                                        <th>状态</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="daily : ${dailyList}">
+                                        <td th:text="${daily.id}"></td>
+                                        <td th:text="${daily.addTime}"></td>
+                                        <td th:text="${daily.content}"></td>
+                                        <td th:text="${daily.oldName}"></td>
+                                        <td th:text="${daily.nurseName}"></td>
+                                        <td th:text="${daily.status}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer class="">
+            2014 &copy; AdminEx by ThemeBucket
+        </footer>
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/assets/js/jquery-1.10.2.min.js"></script>
+<script src="/assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/modernizr.min.js"></script>
+<script src="/assets/js/jquery.nicescroll.js"></script>
+
+<!--Sparkline Chart-->
+<script src="/assets/js/sparkline/jquery.sparkline.js"></script>
+<script src="/assets/js/sparkline/sparkline-init.js"></script>
+
+<!--google map-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&AMP;sensor=false"></script>
+
+
+<!--common scripts for all pages-->
+<script src="/assets/js/scripts.js"></script>
+
+<script>
+
+    //google map
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(-37.815207, 144.963937);
+        var mapOptions = {
+            zoom: 15,
+            scrollwheel: false,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: 'Hello World!'
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+</body>
+</html>

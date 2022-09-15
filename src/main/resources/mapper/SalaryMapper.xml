@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjy.beadhouse.dao.SalaryMapper">
+
+    <resultMap id="salaryMap" type="com.yjy.beadhouse.entity.Salary">
+        <id column="id" property="id"/>
+        <result column="nurse_id" property="nurseId"/>
+        <result column="salary" property="salary"/>
+    </resultMap>
+
+    <select id="getSalaryById" resultType="com.yjy.beadhouse.entity.Salary">
+        select * from tb_salary where `nurse_id` = #{id}
+    </select>
+
+
+</mapper>
